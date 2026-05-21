@@ -67,4 +67,177 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to
+
+# 🍝 Trio Restaurant Website
+
+A luxury Italian restaurant web application built using React.js, Node.js, Express.js, and MongoDB.
+
+---
+
+# 📌 Project Description
+
+Trio Restaurant is a fully responsive restaurant website that allows users to:
+
+- Browse Italian food menu
+- Create accounts and login
+- Add items to cart
+- Checkout orders
+- Contact the restaurant
+- Experience a luxury responsive UI
+
+The project demonstrates full-stack web development using modern technologies.
+
+---
+
+# 🚀 Technologies Used
+
+## Frontend
+- React.js
+- HTML5
+- CSS3
+- Bootstrap
+- Axios
+
+## Backend
+- Node.js
+- Express.js
+
+## Database
+- MongoDB Atlas
+- Mongoose
+
+## Version Control
+- Git
+- GitHub
+
+---
+
+# ✨ Features
+
+- Responsive design for desktop, tablet, and mobile
+- Login & Signup system
+- Persistent user login using localStorage
+- Contact form connected to MongoDB
+- Shopping cart page
+- Checkout system
+- Luxury olive-green UI theme
+- Responsive navbar
+- GitHub version control
+
+---
+
+# 📱 Responsive Design
+
+The website is fully responsive and works correctly on:
+
+- Desktop
+- Tablet
+- Mobile Devices
+
+---
+
+# 📂 Project Structure
+
+frontend/
+│
+├── src/
+│ ├── pages/
+│ ├── components/
+│ ├── assets/
+│ └── App.js
+│
+backend/
+│
+├── models/
+├── routes/
+├── controllers/
+└── server.js
+
+---
+
+# ⚙️ Installation
+
+## 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/malakhatemamin/trio-restaurant.git
+```
+
+---
+
+## 2️⃣ Install Frontend Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## 3️⃣ Install Backend Dependencies
+
+```bash
+cd backend
+npm install
+```
+
+---
+
+## 4️⃣ Run Backend
+
+```bash
+npm run dev
+```
+
+---
+
+## 5️⃣ Run Frontend
+
+```bash
+npm start
+```
+
+---
+
+# 🗄️ Database
+
+MongoDB Atlas is used for:
+
+- Users collection
+- Messages collection
+
+---
+
+# 👩‍💻 Team Members
+
+| Name | Role |
+|---|---|
+| Malak Hatem | Frontend Development |
+| Team Member | Backend Development |
+| Team Member | Database Integration |
+| Team Member | Responsive Design |
+
+---
+
+# 📸 Screenshots
+
+Add screenshots here before submission.
+
+Examples:
+- Home Page
+- Login Page
+- Contact Page
+- Mobile Responsive View
+- MongoDB Collections
+
+---
+
+# 🔗 GitHub Repository
+
+https://github.com/malakhatemamin/trio-restaurant
+
+---
+
+# ✅ Project Status
+
+Completed Successfully ✅
