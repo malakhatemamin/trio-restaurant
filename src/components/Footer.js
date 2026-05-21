@@ -2,63 +2,110 @@ function Footer(){
 
  return(
 
-  <footer className='bg-dark text-white mt-5 p-5'>
+  <footer>
 
    <div className='container'>
 
-    <div className='row'>
+    <div className='row text-center text-md-start'>
 
-     {/* Restaurant Info */}
+     {/* LEFT */}
 
      <div className='col-md-4 mb-4'>
 
-      <h3>Restaurant</h3>
+      <h3>
 
-      <p>
+       Trio Restaurant
 
-       Delicious meals with high quality
-       ingredients and fast delivery.
+      </h3>
+
+      <p className='mt-3'>
+
+       Luxury Italian dining
+       experience with authentic
+       flavors and elegant atmosphere.
 
       </p>
 
      </div>
 
-     {/* Quick Links */}
+     {/* CENTER */}
 
      <div className='col-md-4 mb-4'>
 
-      <h3>Quick Links</h3>
+      <h4>
 
-      <p>Home</p>
-      <p>Menu</p>
-      <p>Offers</p>
-      <p>Contact</p>
+       Contact
+
+      </h4>
+
+      <p className='mt-3'>
+
+       📍 Cairo, Egypt
+
+      </p>
+
+      <p>
+
+       📞 +20 123 456 789
+
+      </p>
+
+      <p>
+
+       ✉️ trio@gmail.com
+
+      </p>
 
      </div>
 
-     {/* Contact Info */}
+     {/* RIGHT */}
 
      <div className='col-md-4 mb-4'>
 
-      <h3>Contact Us</h3>
+      <h4>
 
-      <p>Email: restaurant@gmail.com</p>
+       Opening Hours
 
-      <p>Phone: +20 123456789</p>
+      </h4>
 
-      <p>Alexandria, Egypt</p>
+      <p className='mt-3'>
+
+       Monday - Friday
+
+      </p>
+
+      <p>
+
+       10:00 AM - 11:00 PM
+
+      </p>
+
+      <p>
+
+       Saturday - Sunday
+
+      </p>
+
+      <p>
+
+       12:00 PM - 1:00 AM
+
+      </p>
 
      </div>
 
     </div>
 
-    <hr />
+    {/* BOTTOM */}
 
-    <div className='text-center'>
+    <hr style={{borderColor:'#556B4D'}} />
+
+    <div className='text-center pt-3'>
 
      <p>
 
-      © 2026 Restaurant Ordering System
+      © 2026 Trio Restaurant.
+      All Rights Reserved.
 
      </p>
 

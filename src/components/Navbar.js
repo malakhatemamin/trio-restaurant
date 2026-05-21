@@ -39,7 +39,9 @@ function Navbar(){
 
       style={{
 
-       width:'230px'
+       width:'240px',
+
+       objectFit:'contain'
 
       }}
 
@@ -59,15 +61,35 @@ function Navbar(){
 
      data-bs-target='#navbarNav'
 
+     aria-controls='navbarNav'
+
+     aria-expanded='false'
+
+     aria-label='Toggle navigation'
+
      style={{
 
-      background:'#E5D3B3'
+      border:'1px solid #E5D3B3',
+
+      background:'#314131'
 
      }}
 
     >
 
-     <span className='navbar-toggler-icon'></span>
+     <span
+
+      className='navbar-toggler-icon'
+
+      style={{
+
+       filter:'invert(1)'
+
+      }}
+
+     >
+
+     </span>
 
     </button>
 
@@ -80,7 +102,7 @@ function Navbar(){
 
      {/* LINKS */}
 
-     <ul className='navbar-nav mx-auto'>
+     <ul className='navbar-nav mx-auto align-items-center'>
 
       <li className='nav-item'>
 
@@ -116,6 +138,19 @@ function Navbar(){
        >
 
         Cart
+
+       </Link>
+
+      </li>
+
+      <li className='nav-item'>
+
+       <Link
+        to='/reservation'
+        className='nav-link'
+       >
+
+        Reservation
 
        </Link>
 
@@ -162,9 +197,9 @@ function Navbar(){
 
      </ul>
 
-     {/* RIGHT */}
+     {/* RIGHT SIDE */}
 
-     <div className='d-flex align-items-center gap-3'>
+     <div className='d-flex align-items-center gap-3 mobile-user-section'>
 
       {
 
@@ -172,13 +207,17 @@ function Navbar(){
 
        <>
 
+        {/* HELLO */}
+
         <span
 
          style={{
 
           color:'#E5D3B3',
 
-          fontWeight:'700'
+          fontWeight:'700',
+
+          fontSize:'16px'
 
          }}
 
@@ -189,6 +228,8 @@ function Navbar(){
          {userInfo?.name}
 
         </span>
+
+        {/* LOGOUT */}
 
         <button
 
@@ -208,6 +249,8 @@ function Navbar(){
 
        <>
 
+        {/* LOGIN */}
+
         <Link
          to='/login'
          className='nav-link'
@@ -217,8 +260,10 @@ function Navbar(){
 
         </Link>
 
+        {/* SIGNUP */}
+
         <Link
-         to='/signup'
+         to='/Register'
          className='nav-link'
         >
 

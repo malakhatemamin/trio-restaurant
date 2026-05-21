@@ -1,20 +1,109 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-function Cart({
+function Cart(){
 
- cart,
- addToCart,
- removeFromCart
+ /* CART */
 
-}){
+ const [cartItems,setCartItems] =
+ useState([]);
 
- let total = 0;
+ /* LOAD CART */
 
- cart.forEach((item)=>{
+ useEffect(()=>{
 
-  total += item.price * item.quantity;
+  const savedCart = JSON.parse(
 
- });
+   localStorage.getItem('cart')
+
+  ) || [];
+
+  /* ADD QUANTITY + NOTES */
+
+  const updatedCart = savedCart.map((item)=>({
+
+   ...item,
+
+   quantity:item.quantity || 1,
+
+   notes:item.notes || ''
+
+  }));
+
+  setCartItems(updatedCart);
+
+ },[]);
+
+ /* SAVE */
+
+ const saveCart = (updatedCart)=>{
+
+  setCartItems(updatedCart);
+
+  localStorage.setItem(
+
+   'cart',
+
+   JSON.stringify(updatedCart)
+
+  );
+
+ };
+
+ /* INCREASE */
+
+ const increaseQty = (index)=>{
+
+  const updatedCart = [...cartItems];
+
+  updatedCart[index].quantity += 1;
+
+  saveCart(updatedCart);
+
+ };
+
+ /* DECREASE */
+
+ const decreaseQty = (index)=>{
+
+  const updatedCart = [...cartItems];
+
+  if(updatedCart[index].quantity > 1){
+
+   updatedCart[index].quantity -= 1;
+
+  }else{
+
+   updatedCart.splice(index,1);
+
+  }
+
+  saveCart(updatedCart);
+
+ };
+
+ /* NOTES */
+
+ const handleNotes = (index,value)=>{
+
+  const updatedCart = [...cartItems];
+
+  updatedCart[index].notes = value;
+
+  saveCart(updatedCart);
+
+ };
+
+ /* TOTAL */
+
+ const total = cartItems.reduce(
+
+  (acc,item)=>
+
+   acc + (item.price * item.quantity),
+
+  0
+
+ );
 
  return(
 
@@ -25,6 +114,7 @@ function Cart({
    <div className='text-center mb-5'>
 
     <span
+
      style={{
 
       color:'#E5D3B3',
@@ -34,20 +124,16 @@ function Cart({
       fontWeight:'600'
 
      }}
+
     >
 
      YOUR CART
 
     </span>
 
-    <h1
-     className='fw-bold my-3'
-     style={{
-      fontSize:'60px'
-     }}
-    >
+    <h1 className='fw-bold my-3'>
 
-     Shopping Cart
+     Cart Summary
 
     </h1>
 
@@ -55,49 +141,15 @@ function Cart({
 
    {
 
-    cart.length === 0 ?
+    cartItems.length === 0 ?
 
-    /* EMPTY */
+    <div className='text-center'>
 
-    <div className='text-center py-5'>
+     <h3>
 
-     <img
+      Your cart is empty
 
-      src='https://cdn-icons-png.flaticon.com/512/2038/2038854.png'
-
-      alt='empty'
-
-      style={{
-
-       width:'180px',
-
-       opacity:'0.8'
-
-      }}
-
-     />
-
-     <h2 className='mt-4'>
-
-      Your Cart Is Empty
-
-     </h2>
-
-     <p>
-
-      Add delicious meals to start
-      your order.
-
-     </p>
-
-     <Link
-      to='/menu'
-      className='btn btn-dark mt-3'
-     >
-
-      Explore Menu
-
-     </Link>
+     </h3>
 
     </div>
 
@@ -105,194 +157,172 @@ function Cart({
 
     <>
 
-     {/* ITEMS */}
-
      {
 
-      cart.map((item)=>{
+      cartItems.map((item,index)=>(
 
-       return(
+       <div
 
-        <div
-         className='card p-4 mb-4'
-         key={item.id}
-        >
+        key={index}
 
-         <div className='row align-items-center'>
+        className='card p-4 mb-4'
 
-          {/* IMAGE */}
+       >
 
-          <div className='col-md-3 mb-3'>
+        <div className='row align-items-center'>
 
-           <img
+         {/* LEFT */}
 
-            src={item.image}
+         <div className='col-lg-6'>
 
-            alt='food'
+          <h3>
 
-            className='img-fluid'
+           {item.name}
 
-            style={{
+          </h3>
 
-             height:'200px',
+          <p>
 
-             width:'100%',
+           Luxury Italian Dish
 
-             objectFit:'cover'
+          </p>
+
+          <h5>
+
+           ${item.price}
+
+          </h5>
+
+         </div>
+
+         {/* CENTER */}
+
+         <div className='col-lg-3 text-center'>
+
+          <div
+
+           className='d-flex justify-content-center align-items-center gap-3'
+
+          >
+
+           {/* MINUS */}
+
+           <button
+
+            className='btn btn-dark'
+
+            onClick={()=>{
+
+             decreaseQty(index);
 
             }}
 
-           />
-
-          </div>
-
-          {/* INFO */}
-
-          <div className='col-md-5'>
-
-           <h3 className='fw-bold'>
-
-            {item.name}
-
-           </h3>
-
-           <p>
-
-            Fresh Italian meal made
-            with premium ingredients.
-
-           </p>
-
-           <h4
-            style={{
-             color:'#E5D3B3'
-            }}
            >
 
-            {item.price} EGP
+            -
+
+           </button>
+
+           {/* QTY */}
+
+           <h4>
+
+            {item.quantity}
 
            </h4>
 
-           {/* NOTES */}
+           {/* PLUS */}
 
-           <textarea
+           <button
 
-            className='form-control mt-3'
+            className='btn btn-dark'
 
-            rows='3'
+            onClick={()=>{
 
-            placeholder='Add notes for your order...'
+             increaseQty(index);
 
-           ></textarea>
-
-          </div>
-
-          {/* QUANTITY */}
-
-          <div className='col-md-4 text-center'>
-
-           <div
-            className='d-flex justify-content-center align-items-center mb-4'
-           >
-
-            <button
-
-             className='btn btn-danger'
-
-             onClick={()=>
-              removeFromCart(item.id)
-             }
-
-            >
-
-             -
-
-            </button>
-
-            <h4 className='mx-4'>
-
-             {item.quantity}
-
-            </h4>
-
-            <button
-
-             className='btn btn-dark'
-
-             onClick={()=>
-              addToCart(item)
-             }
-
-            >
-
-             +
-
-            </button>
-
-           </div>
-
-           <h4
-            style={{
-             color:'#E5D3B3'
             }}
+
            >
 
-            {item.price * item.quantity}
-            {' '}
-            EGP
+            +
 
-           </h4>
+           </button>
 
           </div>
 
          </div>
 
+         {/* RIGHT */}
+
+         <div className='col-lg-3 text-end'>
+
+          <h4>
+
+           ${item.price * item.quantity}
+
+          </h4>
+
+         </div>
+
         </div>
 
-       )
+        {/* NOTES */}
 
-      })
+        <textarea
+
+         rows='2'
+
+         className='form-control mt-4'
+
+         placeholder='Add Notes (Extra Cheese, No Onion...)'
+
+         value={item.notes}
+
+         onChange={(e)=>{
+
+          handleNotes(
+
+           index,
+           e.target.value
+
+          );
+
+         }}
+
+        >
+
+        </textarea>
+
+       </div>
+
+      ))
 
      }
 
-     {/* SUMMARY */}
+     {/* TOTAL */}
 
-     <div
-      className='card p-5 mt-5'
-     >
+     <div className='card p-4 text-center'>
 
-      <div
-       className='d-flex justify-content-between align-items-center'
-      >
+      <h2>
 
-       <h2
-        className='fw-bold'
-       >
+       Total:
+       {' '}
+       ${total}
 
-        Final Total
+      </h2>
 
-       </h2>
+      <a
 
-       <h1
-        style={{
-         color:'#E5D3B3'
-        }}
-       >
+       href='/checkout'
 
-        {total} EGP
+       className='btn btn-dark mt-4'
 
-       </h1>
-
-      </div>
-
-      <Link
-       to='/checkout'
-       className='btn btn-dark btn-lg mt-4'
       >
 
        Proceed To Checkout
 
-      </Link>
+      </a>
 
      </div>
 

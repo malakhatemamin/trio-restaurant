@@ -1,133 +1,233 @@
 import { useState } from 'react';
 
-function Menu({addToCart}){
+function Menu(){
 
- const [showPopup,setShowPopup] =
- useState(false);
+ /* SEARCH */
 
- const foods = [
+ const [search,setSearch] =
+ useState('');
+
+ /* CATEGORY */
+
+ const [category,setCategory] =
+ useState('All');
+
+ /* POPUP */
+
+ const [popup,setPopup] =
+ useState('');
+
+ /* ADD TO CART */
+
+ const addToCart = (item)=>{
+
+  let cart = JSON.parse(
+
+   localStorage.getItem('cart')
+
+  ) || [];
+
+  cart.push(item);
+
+  localStorage.setItem(
+
+   'cart',
+
+   JSON.stringify(cart)
+
+  );
+
+  setPopup(`${item.name} Added To Cart`);
+
+  setTimeout(()=>{
+
+   setPopup('');
+
+  },2000);
+
+ };
+
+ /* MENU ITEMS */
+
+ const menuItems = [
 
   {
 
-   id:1,
+   name:'Alfredo Pasta',
+
+   price:20,
+
+   category:'Pasta',
+
+   image:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Creamy parmesan pasta with grilled chicken.'
+
+  },
+
+  {
+
+   name:'Lasagna',
+
+   price:22,
+
+   category:'Pasta',
+
+   image:'https://images.unsplash.com/photo-1619895092538-128341789043?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Traditional baked Italian lasagna.'
+
+  },
+
+  {
 
    name:'Margherita Pizza',
 
-   price:220,
+   price:18,
 
-   image:
-   'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop',
+   category:'Pizza',
 
-   category:'Pizza'
+   image:'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop',
 
-  },
-
-  {
-
-   id:2,
-
-   name:' Red  Pasta',
-
-   price:180,
-
-   image:
-   'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=1200&auto=format&fit=crop',
-
-   category:'Pasta'
+   description:'Fresh mozzarella and basil pizza.'
 
   },
 
   {
 
-   id:3,
+   name:'Truffle Pizza',
 
-   name:'Luxury Beef Burger',
+   price:28,
 
-   price:199,
+   category:'Pizza',
 
-   image:
-   'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop',
+   image:'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=1200&auto=format&fit=crop',
 
-   category:'Burger'
-
-  },
-
-  {
-
-   id:4,
-
-   name:'Italian Lasagna',
-
-   price:240,
-
-   image:
-   'https://images.unsplash.com/photo-1619895092538-128341789043?q=80&w=1200&auto=format&fit=crop',
-
-   category:'Pasta'
+   description:'Luxury truffle pizza with mozzarella cheese.'
 
   },
 
   {
 
-   id:5,
+   name:'Italian Steak',
+
+   price:30,
+
+   category:'Main Course',
+
+   image:'https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Premium grilled steak with herbs.'
+
+  },
+
+  {
+
+   name:'Grilled Salmon',
+
+   price:32,
+
+   category:'Main Course',
+
+   image:'https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Fresh salmon grilled with Italian seasoning.'
+
+  },
+
+  {
 
    name:'Caesar Salad',
 
-   price:130,
+   price:14,
 
-   image:
-   'https://images.unsplash.com/photo-1546793665-c74683f339c1?q=80&w=1200&auto=format&fit=crop',
+   category:'Salads',
 
-   category:'Salad'
+   image:'https://images.unsplash.com/photo-1546793665-c74683f339c1?q=80&w=1200&auto=format&fit=crop',
 
-  },
-
-  {
-
-   id:6,
-
-   name:'Seafood Pizza',
-
-   price:280,
-
-   image:
-   'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=1200&auto=format&fit=crop',
-
-   category:'Pizza'
+   description:'Fresh lettuce with parmesan and Caesar dressing.'
 
   },
 
   {
 
-   id:7,
+   name:'Bruschetta',
 
-   name:'Truffle Mushroom Pasta',
+   price:10,
 
-   price:260,
+   category:'Appetizers',
 
-   image:
-   'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?q=80&w=1200&auto=format&fit=crop',
+   image:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop',
 
-   category:'Pasta'
+   description:'Grilled bread topped with tomatoes and basil.'
 
   },
 
   {
 
-   id:8,
+   name:'Mushroom Soup',
 
-   name:'Grilled  Steak',
+   price:13,
 
-   price:320,
+   category:'Soup',
 
-   image:
-   'https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1200&auto=format&fit=crop',
+   image:'https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=1200&auto=format&fit=crop',
 
-   category:'Steak'
+   description:'Warm creamy mushroom soup with herbs.'
+
+  },
+
+  {
+
+   name:'Tiramisu',
+
+   price:12,
+
+   category:'Desserts',
+
+   image:'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Classic Italian dessert with coffee flavor.'
+
+  },
+
+  {
+
+   name:'Lemon Cheesecake',
+
+   price:11,
+
+   category:'Desserts',
+
+   image:'https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Creamy cheesecake with fresh lemon flavor.'
 
   }
 
  ];
+
+ /* FILTER */
+
+ const filteredItems = menuItems.filter((item)=>{
+
+  return(
+
+   (category === 'All' ||
+
+    item.category === category)
+
+   &&
+
+   item.name.toLowerCase().includes(
+
+    search.toLowerCase()
+
+   )
+
+  );
+
+ });
 
  return(
 
@@ -138,15 +238,17 @@ function Menu({addToCart}){
    <div className='text-center mb-5'>
 
     <span
+
      style={{
 
-      color:'#7C8F58',
+      color:'#E5D3B3',
 
       letterSpacing:'2px',
 
       fontWeight:'600'
 
      }}
+
     >
 
      OUR MENU
@@ -154,168 +256,223 @@ function Menu({addToCart}){
     </span>
 
     <h1
-     className='fw-bold my-3'
+
+     className='fw-bold mt-3'
+
      style={{
-      fontSize:'65px'
+
+      fontSize:'55px'
+
      }}
+
     >
 
-     Italian Luxury Dining
+     Italian Specialties
 
     </h1>
 
-    <p
-     className='fs-5'
-     style={{
-      maxWidth:'750px',
-      margin:'auto'
-     }}
-    >
+   </div>
 
-     Explore handcrafted Italian
-     dishes prepared with fresh
-     ingredients and authentic
-     flavors inspired by the heart
-     of Italy.
+   {/* SEARCH */}
 
-    </p>
+   <div className='row mb-5 justify-content-center'>
+
+    <div className='col-lg-5'>
+
+     <input
+
+      type='text'
+
+      className='form-control'
+
+      placeholder='Search food...'
+
+      value={search}
+
+      onChange={(e)=>{
+
+       setSearch(e.target.value);
+
+      }}
+
+     />
+
+    </div>
 
    </div>
 
-   {/* MENU ITEMS */}
+   {/* CATEGORIES */}
 
-   <div className='row'>
+   <div className='d-flex flex-wrap justify-content-center gap-3 mb-5'>
 
     {
 
-     foods.map((food)=>{
+     [
 
-      return(
+      'All',
+      'Pasta',
+      'Pizza',
+      'Main Course',
+      'Salads',
+      'Desserts'
+
+     ].map((cat,index)=>(
+
+      <button
+
+       key={index}
+
+       className={`btn ${
+        category === cat
+        ?
+        'btn-dark'
+        :
+        'btn-outline-dark'
+       }`}
+
+       onClick={()=>{
+
+        setCategory(cat);
+
+       }}
+
+      >
+
+       {cat}
+
+      </button>
+
+     ))
+
+    }
+
+   </div>
+
+   {/* MENU GRID */}
+
+   <div className='row g-4'>
+
+    {
+
+     filteredItems.map((item,index)=>(
+
+      <div
+
+       key={index}
+
+       className='col-lg-3 col-md-6 col-sm-12'
+
+      >
 
        <div
-        className='col-md-3 mb-4'
-        key={food.id}
+
+        className='card h-100 overflow-hidden'
+
+        style={{
+
+         borderRadius:'25px'
+
+        }}
+
        >
 
-        <div
-         className='card h-100'
+        {/* IMAGE */}
+
+        <img
+
+         src={item.image}
+
+         alt={item.name}
+
+         className='img-fluid'
+
          style={{
 
-          borderRadius:'28px',
+          height:'250px',
 
-          overflow:'hidden'
+          objectFit:'cover',
+
+          width:'100%'
 
          }}
-        >
 
-         {/* IMAGE */}
+        />
 
-         <div
+        {/* CONTENT */}
+
+        <div className='p-4 text-center'>
+
+         <span
+
           style={{
-           overflow:'hidden'
+
+           color:'#E5D3B3',
+
+           fontWeight:'600'
+
           }}
+
          >
 
-          <img
+          {item.category}
 
-           src={food.image}
+         </span>
 
-           alt='food'
+         <h3 className='fw-bold mt-2'>
 
-           className='img-fluid'
+          {item.name}
 
-           style={{
+         </h3>
 
-            height:'260px',
+         <p className='mt-3'>
 
-            width:'100%',
+          {item.description}
 
-            objectFit:'cover'
+         </p>
 
-           }}
+         <h4
 
-          />
+          className='my-4'
 
-         </div>
+          style={{
 
-         {/* CONTENT */}
+           color:'#E5D3B3',
 
-         <div className='p-4'>
+           fontWeight:'700'
 
-          <span
-           className='badge mb-3'
-           style={{
+          }}
 
-            background:'#D8C3A5',
+         >
 
-            color:'#3E4B3C',
+          ${item.price}
 
-            padding:'8px 14px',
+         </h4>
 
-            fontSize:'13px'
+         {/* BUTTON */}
 
-           }}
-          >
+         <button
 
-           {food.category}
+          className='btn btn-dark w-100'
 
-          </span>
+          onClick={()=>{
 
-          <h4 className='fw-bold'>
+           addToCart(item);
 
-           {food.name}
+          }}
 
-          </h4>
+         >
 
-          <div
-           className='d-flex justify-content-between align-items-center mt-4'
-          >
+          Add To Cart
 
-           <h5
-            style={{
-             color:'#556B2F'
-            }}
-           >
-
-            {food.price} EGP
-
-           </h5>
-
-           <button
-
-            className='btn btn-dark'
-
-            onClick={()=>{
-
-             addToCart(food);
-
-             setShowPopup(true);
-
-             setTimeout(()=>{
-
-              setShowPopup(false);
-
-             },2500);
-
-            }}
-
-           >
-
-            Add
-
-           </button>
-
-          </div>
-
-         </div>
+         </button>
 
         </div>
 
        </div>
 
-      )
+      </div>
 
-     })
+     ))
 
     }
 
@@ -325,7 +482,7 @@ function Menu({addToCart}){
 
    {
 
-    showPopup &&
+    popup &&
 
     <div
 
@@ -337,87 +494,25 @@ function Menu({addToCart}){
 
       right:'30px',
 
-      background:'#fff',
+      background:'#314131',
+
+      color:'#F5F5F0',
 
       padding:'20px 30px',
 
-      borderRadius:'20px',
-
-      boxShadow:'0 10px 30px rgba(0,0,0,0.15)',
+      borderRadius:'18px',
 
       zIndex:'9999',
 
-      display:'flex',
+      border:'2px solid #E5D3B3',
 
-      alignItems:'center',
-
-      gap:'15px',
-
-      minWidth:'350px'
+      boxShadow:'0 10px 30px rgba(0,0,0,0.3)'
 
      }}
 
     >
 
-     {/* ICON */}
-
-     <div
-
-      style={{
-
-       width:'60px',
-
-       height:'60px',
-
-       borderRadius:'50%',
-
-       background:'#7C8F58',
-
-       display:'flex',
-
-       justifyContent:'center',
-
-       alignItems:'center',
-
-       color:'white',
-
-       fontSize:'30px'
-
-      }}
-
-     >
-
-      ✓
-
-     </div>
-
-     {/* TEXT */}
-
-     <div>
-
-      <h4
-       style={{
-        margin:'0',
-        fontWeight:'700'
-       }}
-      >
-
-       Added To Cart
-
-      </h4>
-
-      <p
-       style={{
-        margin:'0',
-        color:'#777'
-       }}
-      >
-
-       Your delicious item was added.
-
-      </p>
-
-     </div>
+     ✓ {popup}
 
     </div>
 

@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import './App.css';
 
 import {
 
@@ -6,11 +6,15 @@ import {
  Routes,
  Route
 
-}
+} from 'react-router-dom';
 
-from 'react-router-dom';
+/* COMPONENTS */
 
 import Navbar from './components/Navbar';
+
+import Footer from './components/Footer';
+
+/* PAGES */
 
 import Home from './pages/Home';
 
@@ -20,261 +24,137 @@ import Cart from './pages/Cart';
 
 import Checkout from './pages/Checkout';
 
-import Login from './pages/Login';
-
-import Register from './pages/Register';
-
-import Dashboard from './pages/Dashboard';
+import Contact from './pages/Contact';
 
 import About from './pages/About';
 
-import Contact from './pages/Contact';
-
 import Offers from './pages/Offers';
 
-import './App.css';
+import Login from './pages/Login';
+
+import Signup from './pages/Register';
+
+import Reservation from './pages/Reservation';
 
 function App(){
-
- /* USER */
-
- const [user,setUser] =
- useState(
-
-  JSON.parse(
-   localStorage.getItem('user')
-  )
-
-  || null
-
- );
-
- /* CART */
-
- const [cart,setCart] =
- useState(
-
-  JSON.parse(
-   localStorage.getItem('cart')
-  )
-
-  || []
-
- );
-
- /* SAVE CART */
-
- useEffect(()=>{
-
-  localStorage.setItem(
-
-   'cart',
-
-   JSON.stringify(cart)
-
-  );
-
- },[cart]);
-
- /* SAVE USER */
-
- useEffect(()=>{
-
-  localStorage.setItem(
-
-   'user',
-
-   JSON.stringify(user)
-
-  );
-
- },[user]);
-
- /* ADD TO CART */
-
- function addToCart(food){
-
-  const exist = cart.find(
-
-   (item)=> item.id === food.id
-
-  );
-
-  if(exist){
-
-   setCart(
-
-    cart.map((item)=>
-
-     item.id === food.id
-
-     ?
-
-     {
-
-      ...item,
-
-      quantity:item.quantity + 1
-
-     }
-
-     :
-
-     item
-
-    )
-
-   );
-
-  }
-
-  else{
-
-   setCart([
-
-    ...cart,
-
-    {
-
-     ...food,
-
-     quantity:1
-
-    }
-
-   ]);
-
-  }
-
- }
-
- /* REMOVE */
-
- function removeFromCart(id){
-
-  const exist = cart.find(
-
-   (item)=> item.id === id
-
-  );
-
-  if(exist.quantity === 1){
-
-   setCart(
-
-    cart.filter(
-
-     (item)=> item.id !== id
-
-    )
-
-   );
-
-  }
-
-  else{
-
-   setCart(
-
-    cart.map((item)=>
-
-     item.id === id
-
-     ?
-
-     {
-
-      ...item,
-
-      quantity:item.quantity - 1
-
-     }
-
-     :
-
-     item
-
-    )
-
-   );
-
-  }
-
- }
 
  return(
 
   <BrowserRouter>
 
-   <Navbar user={user} />
+   {/* NAVBAR */}
+
+   <Navbar />
+
+   {/* ROUTES */}
 
    <Routes>
 
+    {/* HOME */}
+
     <Route
+
      path='/'
+
      element={<Home />}
+
     />
 
+    {/* MENU */}
+
     <Route
+
      path='/menu'
-     element={
-      <Menu addToCart={addToCart} />
-     }
+
+     element={<Menu />}
+
     />
 
+    {/* CART */}
+
     <Route
+
      path='/cart'
-     element={
 
-      <Cart
+     element={<Cart />}
 
-       cart={cart}
-
-       addToCart={addToCart}
-
-       removeFromCart={removeFromCart}
-
-      />
-
-     }
     />
 
+    {/* CHECKOUT */}
+
     <Route
+
      path='/checkout'
-     element={<Checkout cart={cart} />}
+
+     element={<Checkout />}
+
     />
 
-    <Route
-     path='/login'
-     element={<Login setUser={setUser} />}
-    />
+    {/* CONTACT */}
 
     <Route
-     path='/register'
-     element={<Register />}
-    />
 
-    <Route
-     path='/dashboard'
-     element={<Dashboard />}
-    />
-
-    <Route
-     path='/about'
-     element={<About />}
-    />
-
-    <Route
      path='/contact'
+
      element={<Contact />}
+
     />
 
+    {/* ABOUT */}
+
     <Route
+
+     path='/about'
+
+     element={<About />}
+
+    />
+
+    {/* OFFERS */}
+
+    <Route
+
      path='/offers'
-     element={  <Offers addToCart={addToCart} />}
+
+     element={<Offers />}
+
+    />
+
+    {/* LOGIN */}
+
+    <Route
+
+     path='/login'
+
+     element={<Login />}
+
+    />
+
+    {/* SIGNUP */}
+
+    <Route
+
+     path='/Register'
+
+     element={<Signup />}
+
+    />
+
+    {/* RESERVATION */}
+
+    <Route
+
+     path='/reservation'
+
+     element={<Reservation />}
+
     />
 
    </Routes>
+
+   {/* FOOTER */}
+
+   <Footer />
 
   </BrowserRouter>
 

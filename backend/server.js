@@ -12,6 +12,9 @@ require('./routes/userRoutes');
 const messageRoutes =
 require('./routes/messageRoutes');
 
+const reservationRoutes =
+require('./routes/reservationRoutes');
+
 /* APP */
 
 const app = express();
@@ -58,7 +61,14 @@ app.use(
 
 );
 
-/* TEST */
+app.use(
+
+ '/api/reservations',
+ reservationRoutes
+
+);
+
+/* TEST ROUTE */
 
 app.get('/',(req,res)=>{
 

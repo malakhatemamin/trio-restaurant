@@ -1,11 +1,26 @@
 import { useState } from 'react';
 
-import axios from 'axios';
+function Checkout(){
 
-function Checkout({cart}){
+ /* GET CART */
 
- const [success,setSuccess] =
- useState(false);
+ const cartItems = JSON.parse(
+
+  localStorage.getItem('cart')
+
+ ) || [];
+
+ /* TOTAL */
+
+ const total = cartItems.reduce(
+
+  (acc,item)=>acc + item.price,
+
+  0
+
+ );
+
+ /* FORM */
 
  const [name,setName] =
  useState('');
@@ -16,158 +31,298 @@ function Checkout({cart}){
  const [address,setAddress] =
  useState('');
 
- const [city,setCity] =
+ const [notes,setNotes] =
  useState('');
 
  const [payment,setPayment] =
- useState('');
+ useState('Cash');
 
- let total = 0;
+ /* POPUP */
 
- if(cart){
+ const [showPopup,setShowPopup] =
+ useState(false);
 
-  cart.forEach((item)=>{
+ /* PLACE ORDER */
 
-   total += item.price * item.quantity;
-
-  });
-
- }
-
- async function handleOrder(e){
+ const placeOrder = (e)=>{
 
   e.preventDefault();
 
-  try{
+  if(
 
-   const res = await axios.post(
+   !name ||
+   !phone ||
+   !address
 
-    'http://localhost:5000/api/orders/create',
+  ){
 
-    {
+   alert('Please Fill All Fields');
 
-     customerName:name,
-
-     phone,
-
-     address,
-
-     city,
-
-     paymentMethod:payment,
-
-     items:cart,
-
-     total
-
-    }
-
-   );
-
-   alert(res.data.message);
-
-   setSuccess(true);
+   return;
 
   }
 
-  catch(err){
+  /* SHOW SUCCESS */
 
-   alert('Order Failed');
+  setShowPopup(true);
 
-  }
+  /* CLEAR CART */
 
- }
+  localStorage.removeItem('cart');
+
+ };
 
  return(
 
   <div className='container py-5'>
 
-   <div className='row'>
+   {/* HEADER */}
 
-    {/* FORM */}
+   <div className='text-center mb-5'>
 
-    <div className='col-md-7 mb-4'>
+    <span
+
+     style={{
+
+      color:'#E5D3B3',
+
+      letterSpacing:'2px',
+
+      fontWeight:'600'
+
+     }}
+
+    >
+
+     CHECKOUT
+
+    </span>
+
+    <h1 className='fw-bold my-3'>
+
+     Complete Your Order
+
+    </h1>
+
+   </div>
+
+   <div className='row g-5'>
+
+    {/* LEFT */}
+
+    <div className='col-lg-7'>
 
      <div className='card p-5'>
 
-      <h1 className='mb-4'>
-       Billing Details
-      </h1>
+      <h2 className='mb-4'>
 
-      <form onSubmit={handleOrder}>
+       Delivery Information
+
+      </h2>
+
+      <form onSubmit={placeOrder}>
+
+       {/* NAME */}
 
        <input
+
         type='text'
+
+        className='form-control mb-4'
+
         placeholder='Full Name'
-        className='form-control form-control-lg mb-4'
+
         value={name}
-        onChange={(e)=>
-         setName(e.target.value)
-        }
-        required
+
+        onChange={(e)=>{
+
+         setName(e.target.value);
+
+        }}
+
        />
 
+       {/* PHONE */}
+
        <input
+
         type='text'
+
+        className='form-control mb-4'
+
         placeholder='Phone Number'
-        className='form-control form-control-lg mb-4'
+
         value={phone}
-        onChange={(e)=>
-         setPhone(e.target.value)
-        }
-        required
+
+        onChange={(e)=>{
+
+         setPhone(e.target.value);
+
+        }}
+
        />
 
-       <input
-        type='text'
-        placeholder='Address'
-        className='form-control form-control-lg mb-4'
+       {/* ADDRESS */}
+
+       <textarea
+
+        rows='4'
+
+        className='form-control mb-4'
+
+        placeholder='Delivery Address'
+
         value={address}
-        onChange={(e)=>
-         setAddress(e.target.value)
-        }
-        required
-       />
 
-       <input
-        type='text'
-        placeholder='City'
-        className='form-control form-control-lg mb-4'
-        value={city}
-        onChange={(e)=>
-         setCity(e.target.value)
-        }
-        required
-       />
+        onChange={(e)=>{
 
-       <select
-        className='form-control form-control-lg mb-4'
-        value={payment}
-        onChange={(e)=>
-         setPayment(e.target.value)
-        }
-        required
+         setAddress(e.target.value);
+
+        }}
+
        >
 
-        <option value=''>
-         Select Payment Method
-        </option>
+       </textarea>
 
-        <option>
+       {/* NOTES */}
+
+       <textarea
+
+        rows='3'
+
+        className='form-control mb-4'
+
+        placeholder='Additional Notes (Optional)'
+
+        value={notes}
+
+        onChange={(e)=>{
+
+         setNotes(e.target.value);
+
+        }}
+
+       >
+
+       </textarea>
+
+       {/* PAYMENT */}
+
+       <h5 className='mb-3'>
+
+        Payment Method
+
+       </h5>
+
+       <div className='d-flex gap-4 mb-4'>
+
+        <div>
+
+         <input
+
+          type='radio'
+
+          checked={payment === 'Cash'}
+
+          onChange={()=>{
+
+           setPayment('Cash');
+
+          }}
+
+         />
+
+         {' '}
          Cash
-        </option>
 
-        <option>
-         Credit Card
-        </option>
+        </div>
 
-       </select>
+        <div>
+
+         <input
+
+          type='radio'
+
+          checked={payment === 'Visa'}
+
+          onChange={()=>{
+
+           setPayment('Visa');
+
+          }}
+
+         />
+
+         {' '}
+         Visa
+
+        </div>
+
+       </div>
+
+       {/* VISA INFO */}
+
+       {
+
+        payment === 'Visa' &&
+
+        <div className='mb-4'>
+
+         <input
+
+          type='text'
+
+          className='form-control mb-3'
+
+          placeholder='Card Number'
+
+         />
+
+         <div className='row'>
+
+          <div className='col-md-6'>
+
+           <input
+
+            type='text'
+
+            className='form-control mb-3'
+
+            placeholder='MM/YY'
+
+           />
+
+          </div>
+
+          <div className='col-md-6'>
+
+           <input
+
+            type='text'
+
+            className='form-control mb-3'
+
+            placeholder='CVV'
+
+           />
+
+          </div>
+
+         </div>
+
+        </div>
+
+       }
+
+       {/* BUTTON */}
 
        <button
-        className='btn btn-dark btn-lg w-100'
+
+        className='btn btn-dark w-100'
+
        >
 
-        Confirm Order
+        Place Order
 
        </button>
 
@@ -177,78 +332,83 @@ function Checkout({cart}){
 
     </div>
 
-    {/* SUMMARY */}
+    {/* RIGHT */}
 
-    <div className='col-md-5'>
+    <div className='col-lg-5'>
 
-     <div className='card p-5'>
+     <div className='card p-4'>
 
-      <h1 className='mb-4'>
+      <h2 className='mb-4'>
+
        Order Summary
-      </h1>
+
+      </h2>
 
       {
 
-       cart && cart.length > 0 ?
+       cartItems.length === 0 ?
 
-       cart.map((item)=>{
+       <p>
 
-        return(
+        Your cart is empty
 
-         <div
-          className='d-flex justify-content-between mb-3'
-          key={item.id}
-         >
-
-          <div>
-
-           <h5>{item.name}</h5>
-
-           <p>
-
-            Quantity:
-            {' '}
-            {item.quantity}
-
-           </p>
-
-          </div>
-
-          <h5>
-
-           {item.price * item.quantity}
-           {' '}
-           EGP
-
-          </h5>
-
-         </div>
-
-        )
-
-       })
+       </p>
 
        :
 
-       <p>
-        Cart Is Empty
-       </p>
+       <>
+
+        {
+
+         cartItems.map((item,index)=>(
+
+          <div
+
+           key={index}
+
+           className='d-flex justify-content-between mb-3'
+
+          >
+
+           <span>
+
+            {item.name}
+
+           </span>
+
+           <span>
+
+            ${item.price}
+
+           </span>
+
+          </div>
+
+         ))
+
+        }
+
+        <hr />
+
+        <div className='d-flex justify-content-between'>
+
+         <h4>
+
+          Total
+
+         </h4>
+
+         <h4>
+
+          ${total}
+
+         </h4>
+
+        </div>
+
+       </>
 
       }
-
-      <hr />
-
-      <div className='d-flex justify-content-between'>
-
-       <h3>Total</h3>
-
-       <h3 className='text-success'>
-
-        {total} EGP
-
-       </h3>
-
-      </div>
 
      </div>
 
@@ -256,46 +416,128 @@ function Checkout({cart}){
 
    </div>
 
+   {/* SUCCESS POPUP */}
+
    {
 
-    success &&
+    showPopup &&
 
     <div
-     className='position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center'
+
      style={{
-      background:'rgba(0,0,0,0.5)'
+
+      position:'fixed',
+
+      top:'0',
+
+      left:'0',
+
+      width:'100%',
+
+      height:'100vh',
+
+      background:'rgba(0,0,0,0.7)',
+
+      display:'flex',
+
+      justifyContent:'center',
+
+      alignItems:'center',
+
+      zIndex:'9999'
+
      }}
+
     >
 
      <div
-      className='card p-5 text-center'
+
       style={{
-       width:'400px'
+
+       width:'500px',
+
+       background:'#314131',
+
+       padding:'50px',
+
+       borderRadius:'30px',
+
+       textAlign:'center',
+
+       border:'2px solid #E5D3B3'
+
       }}
+
      >
 
-      <h1 className='text-success'>
-       ✅
+      <div
+
+       style={{
+
+        fontSize:'60px',
+
+        color:'#7CFC00'
+
+       }}
+
+      >
+
+       ✓
+
+      </div>
+
+      <h1
+
+       style={{
+
+        color:'#E5D3B3',
+
+        marginTop:'20px'
+
+       }}
+
+      >
+
+       Order Placed
+
       </h1>
 
-      <h2>
-       Order Confirmed
-      </h2>
+      <p
 
-      <p>
+       style={{
 
-       Your order has been saved successfully.
+        color:'#F5F5F0',
+
+        marginTop:'20px',
+
+        lineHeight:'1.8'
+
+       }}
+
+      >
+
+       Your order has been placed
+       successfully.
+       Thank you for choosing
+       Trio Restaurant.
 
       </p>
 
       <button
-       className='btn btn-dark mt-3'
-       onClick={()=>
-        setSuccess(false)
-       }
+
+       className='btn btn-dark mt-4'
+
+       onClick={()=>{
+
+        setShowPopup(false);
+
+        window.location.href='/';
+
+       }}
+
       >
 
-       Close
+       Continue
 
       </button>
 
