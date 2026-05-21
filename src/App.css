@@ -1,0 +1,681 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+
+ margin:0;
+
+ padding:0;
+
+ box-sizing:border-box;
+
+}
+
+body{
+
+ background:
+
+ linear-gradient(
+
+ 135deg,
+
+ #243224,
+
+ #2F3A2F,
+
+ #384A38
+
+ );
+
+ min-height:100vh;
+
+ font-family:'Poppins',sans-serif;
+
+ color:#F5F5F0;
+
+ overflow-x:hidden;
+
+}
+
+/* NAVBAR */
+
+.navbar{
+
+ background:#1F2B1F !important;
+
+ padding:25px 0;
+
+ border-bottom:1px solid #3C4E3C;
+
+ box-shadow:0 2px 10px rgba(0,0,0,0.3);
+
+}
+
+/* NAV LINKS */
+
+.nav-link{
+
+ color:#F5F5F0 !important;
+
+ font-weight:600;
+
+ margin-left:18px;
+
+ font-size:17px;
+
+ transition:0.3s;
+
+ position:relative;
+
+}
+
+.nav-link:hover{
+
+ color:#E5D3B3 !important;
+
+}
+
+.nav-link::after{
+
+ content:'';
+
+ position:absolute;
+
+ left:0;
+
+ bottom:-4px;
+
+ width:0;
+
+ height:2px;
+
+ background:#E5D3B3;
+
+ transition:0.3s;
+
+}
+
+.nav-link:hover::after{
+
+ width:100%;
+
+}
+
+/* BUTTONS */
+
+.btn{
+
+ border:none !important;
+
+ border-radius:14px !important;
+
+ padding:12px 28px !important;
+
+ font-weight:600 !important;
+
+ transition:0.3s !important;
+
+}
+
+.btn-dark{
+
+ background:#A67C52 !important;
+
+ color:#F5F5F0 !important;
+
+}
+
+.btn-dark:hover{
+
+ background:#E5D3B3 !important;
+
+ color:#243224 !important;
+
+ transform:translateY(-2px);
+
+}
+
+/* HERO SECTION */
+
+.hero{
+
+ min-height:92vh;
+
+ display:flex;
+
+ justify-content:center;
+
+ align-items:center;
+
+ text-align:center;
+
+ color:white;
+
+ padding:50px;
+
+ background:
+
+ linear-gradient(
+
+ rgba(24,35,24,0.78),
+
+ rgba(36,50,36,0.82)
+
+ ),
+
+ url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1600&auto=format&fit=crop');
+
+ background-size:cover;
+
+ background-position:center;
+
+ border-radius:0 0 50px 50px;
+
+}
+
+.hero h1{
+
+ font-size:85px;
+
+ font-weight:800;
+
+ color:white;
+
+ margin-bottom:20px;
+
+}
+
+.hero p{
+
+ color:#F5F5F0;
+
+ font-size:22px;
+
+ max-width:750px;
+
+ margin:auto;
+
+ line-height:1.8;
+
+}
+
+/* CARDS */
+
+.card{
+
+ border:none !important;
+
+ border-radius:28px !important;
+
+ overflow:hidden;
+
+ background:#314131 !important;
+
+ color:#F5F5F0 !important;
+
+ box-shadow:
+
+ 0 8px 25px rgba(0,0,0,0.3);
+
+ transition:0.4s;
+
+}
+
+.card:hover{
+
+ transform:translateY(-8px);
+
+ box-shadow:
+
+ 0 15px 35px rgba(0,0,0,0.35);
+
+}
+
+/* HEADINGS */
+
+h1,h2,h3,h4{
+
+ color:#F1E7D0;
+
+ font-weight:700;
+
+}
+
+/* TEXT */
+
+p{
+
+ color:#E4E4DD;
+
+ line-height:1.9;
+
+}
+
+/* IMAGES */
+
+img{
+
+ border-radius:20px;
+
+}
+
+/* FORMS */
+
+.form-control{
+
+ border:none !important;
+
+ background:#556B4D !important;
+
+ border-radius:14px !important;
+
+ padding:15px !important;
+
+ box-shadow:none !important;
+
+ color:white !important;
+
+}
+
+.form-control::placeholder{
+
+ color:#E4E4DD !important;
+
+}
+
+.form-control:focus{
+
+ background:#556B4D !important;
+
+ color:white !important;
+
+ box-shadow:none !important;
+
+}
+
+/* INPUTS */
+
+input{
+
+ background:#556B4D !important;
+
+ color:white !important;
+
+ border:none !important;
+
+}
+
+input::placeholder{
+
+ color:#E4E4DD !important;
+
+}
+
+/* LINKS */
+
+a{
+
+ text-decoration:none !important;
+
+}
+
+/* TABLE */
+
+table{
+
+ color:white !important;
+
+}
+
+/* FOOTER */
+
+footer{
+
+ background:#1F2B1F;
+
+ color:white;
+
+ padding:40px;
+
+ text-align:center;
+
+ margin-top:80px;
+
+ border-radius:40px 40px 0 0;
+
+ border-top:1px solid #3C4E3C;
+
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+
+ width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+ background:#A67C52;
+
+ border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+ background:#243224;
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+ .hero h1{
+
+  font-size:45px;
+
+ }
+
+ .hero p{
+
+  font-size:18px;
+
+ }
+
+ h1{
+
+  font-size:38px;
+
+ }
+
+ .navbar-brand img{
+
+  width:200px !important;
+
+ }
+
+ .nav-link{
+
+  margin:10px 0;
+
+ }
+/* ========================= */
+/* RESPONSIVE DESIGN */
+/* ========================= */
+
+@media(max-width:992px){
+
+ /* NAVBAR */
+
+ .navbar{
+
+  padding:18px 0;
+
+ }
+
+ .navbar-brand img{
+
+  width:200px !important;
+
+ }
+
+ .navbar-collapse{
+
+  margin-top:20px;
+
+  text-align:center;
+
+ }
+
+ .nav-link{
+
+  margin:12px 0 !important;
+
+ }
+
+ /* HERO */
+
+ .hero{
+
+  min-height:80vh;
+
+  padding:40px 20px;
+
+  border-radius:0 0 30px 30px;
+
+ }
+
+ .hero h1{
+
+  font-size:55px !important;
+
+ }
+
+ .hero p{
+
+  font-size:18px !important;
+
+ }
+
+ /* HEADINGS */
+
+ h1{
+
+  font-size:45px !important;
+
+ }
+
+ h2{
+
+  font-size:35px !important;
+
+ }
+
+ /* CARDS */
+
+ .card{
+
+  margin-bottom:25px;
+
+ }
+
+ /* BUTTONS */
+
+ .btn{
+
+  width:100%;
+
+ }
+
+ /* CONTACT IMAGE */
+
+ img{
+
+  width:100% !important;
+
+  height:auto !important;
+
+ }
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+ body{
+
+  overflow-x:hidden;
+
+ }
+
+ /* HERO */
+
+ .hero{
+
+  min-height:75vh;
+
+  padding:30px 15px;
+
+ }
+
+ .hero h1{
+
+  font-size:42px !important;
+
+  line-height:1.3;
+
+ }
+
+ .hero p{
+
+  font-size:16px !important;
+
+  line-height:1.8;
+
+ }
+
+ /* TITLES */
+
+ h1{
+
+  font-size:36px !important;
+
+ }
+
+ h2{
+
+  font-size:28px !important;
+
+ }
+
+ h3{
+
+  font-size:24px !important;
+
+ }
+
+ /* NAVBAR */
+
+ .navbar-brand img{
+
+  width:170px !important;
+
+ }
+
+ .navbar-toggler{
+
+  border:none !important;
+
+  box-shadow:none !important;
+
+ }
+
+ /* FORMS */
+
+ .form-control{
+
+  padding:14px !important;
+
+  font-size:15px !important;
+
+ }
+
+ textarea{
+
+  min-height:120px;
+
+ }
+
+ /* CARDS */
+
+ .card{
+
+  padding:25px !important;
+
+  border-radius:22px !important;
+
+ }
+
+ /* BUTTONS */
+
+ .btn{
+
+  padding:14px 20px !important;
+
+  font-size:15px !important;
+
+ }
+
+ /* MODALS */
+
+ .modal-content{
+
+  width:90% !important;
+
+ }
+
+ /* TABLE */
+
+ table{
+
+  font-size:14px;
+
+ }
+
+ /* FOOTER */
+
+ footer{
+
+  padding:30px 15px;
+
+  border-radius:25px 25px 0 0;
+
+ }
+
+}
+
+/* SMALL MOBILE */
+
+@media(max-width:480px){
+
+ .hero h1{
+
+  font-size:34px !important;
+
+ }
+
+ .hero p{
+
+  font-size:15px !important;
+
+ }
+
+ h1{
+
+  font-size:30px !important;
+
+ }
+
+ .navbar-brand img{
+
+  width:150px !important;
+
+ }
+
+ .card{
+
+  padding:20px !important;
+
+ }
+
+ .btn{
+
+  font-size:14px !important;
+
+ }
+
+}
+}
