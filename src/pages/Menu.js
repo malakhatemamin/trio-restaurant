@@ -53,7 +53,7 @@ function Menu(){
 
   {
 
-   name:'Alfredo Pasta',
+   name:'Red Pasta',
 
    price:20,
 

@@ -1,67 +1,193 @@
 import { useState } from 'react';
 
-function Offers({addToCart}){
+function Offers(){
 
- const [showPopup,setShowPopup] =
- useState(false);
+ /* SEARCH */
+
+ const [search,setSearch] =
+ useState('');
+
+ /* CATEGORY */
+
+ const [category,setCategory] =
+ useState('All');
+
+ /* POPUP */
+
+ const [popup,setPopup] =
+ useState('');
+
+ /* ADD TO CART */
+
+ const addToCart = (offer)=>{
+
+  let cart = JSON.parse(
+
+   localStorage.getItem('cart')
+
+  ) || [];
+
+  cart.push({
+
+   name:offer.name,
+
+   price:offer.newPrice
+
+  });
+
+  localStorage.setItem(
+
+   'cart',
+
+   JSON.stringify(cart)
+
+  );
+
+  setPopup(`${offer.name} Added To Cart`);
+
+  setTimeout(()=>{
+
+   setPopup('');
+
+  },2000);
+
+ };
+
+ /* OFFERS */
 
  const offers = [
 
   {
 
-   id:101,
+   name:'Pizza Combo',
 
-   title:'Luxury Burger Meal',
+   category:'Pizza',
 
-   image:
-   'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop',
+   oldPrice:30,
 
-   price:199,
+   newPrice:20,
 
-   oldPrice:'260 EGP',
+   discount:'30% OFF',
 
-   description:
-   'Juicy grilled burger with crispy fries and refreshing drink.'
+   image:'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop',
 
-  },
-
-  {
-
-   id:102,
-
-   title:'Italian Pasta Night',
-
-   image:
-   'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=1200&auto=format&fit=crop',
-
-   price:149,
-
-   oldPrice:'220 EGP',
-
-   description:
-   'Creamy pasta made with premium cheese and fresh ingredients.'
+   description:'2 large pizzas + drinks.'
 
   },
 
   {
 
-   id:103,
+   name:'Pasta Night',
 
-   title:'Family Pizza Deal',
+   category:'Pasta',
 
-   image:
-   'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop',
+   oldPrice:25,
 
-   price:299,
+   newPrice:18,
 
-   oldPrice:'420 EGP',
+   discount:'25% OFF',
 
-   description:
-   'Large pizza with sides and drinks perfect for family gatherings.'
+   image:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Creamy pasta special offer.'
+
+  },
+
+  {
+
+   name:'Family Dinner',
+
+   category:'Family',
+
+   oldPrice:70,
+
+   newPrice:50,
+
+   discount:'20% OFF',
+
+   image:'https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Luxury family dinner for 4.'
+
+  },
+
+  {
+
+   name:'Dessert Deal',
+
+   category:'Desserts',
+
+   oldPrice:18,
+
+   newPrice:10,
+
+   discount:'45% OFF',
+
+   image:'https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Cheesecake + Tiramisu combo.'
+
+  },
+
+  {
+
+   name:'Seafood Special',
+
+   category:'Seafood',
+
+   oldPrice:45,
+
+   newPrice:35,
+
+   discount:'22% OFF',
+
+   image:'https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Fresh salmon and shrimp special.'
+
+  },
+
+  {
+
+   name:'Lunch Offer',
+
+   category:'Lunch',
+
+   oldPrice:22,
+
+   newPrice:15,
+
+   discount:'32% OFF',
+
+   image:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop',
+
+   description:'Lunch meal with drink included.'
 
   }
 
  ];
+
+ /* FILTER */
+
+ const filteredOffers = offers.filter((offer)=>{
+
+  return(
+
+   (category === 'All' ||
+
+    offer.category === category)
+
+   &&
+
+   offer.name.toLowerCase().includes(
+
+    search.toLowerCase()
+
+   )
+
+  );
+
+ });
 
  return(
 
@@ -71,215 +197,311 @@ function Offers({addToCart}){
 
    <div className='text-center mb-5'>
 
-    <h1
-     className='fw-bold'
+    <span
+
      style={{
-      fontSize:'60px'
+
+      color:'#E5D3B3',
+
+      letterSpacing:'2px',
+
+      fontWeight:'600'
+
      }}
+
     >
 
-     Exclusive Offers
+     SPECIAL OFFERS
+
+    </span>
+
+    <h1
+
+     className='fw-bold mt-3'
+
+     style={{
+
+      fontSize:'55px'
+
+     }}
+
+    >
+
+     Exclusive Deals
 
     </h1>
 
-    <p
-     className='fs-5'
-     style={{
-      maxWidth:'700px',
-      margin:'auto'
-     }}
-    >
+    <p className='mt-3 fs-5'>
 
-     Enjoy premium meals and luxury
-     restaurant offers crafted
-     specially for Trio Restaurant
-     guests.
+     Enjoy luxury Italian meals
+     with exclusive discounts
+     and limited-time offers.
 
     </p>
 
    </div>
 
-   {/* OFFERS */}
+   {/* SEARCH */}
 
-   <div className='row'>
+   <div className='row mb-5 justify-content-center'>
+
+    <div className='col-lg-5'>
+
+     <input
+
+      type='text'
+
+      className='form-control'
+
+      placeholder='Search offers...'
+
+      value={search}
+
+      onChange={(e)=>{
+
+       setSearch(e.target.value);
+
+      }}
+
+     />
+
+    </div>
+
+   </div>
+
+   {/* CATEGORIES */}
+
+   <div className='d-flex flex-wrap justify-content-center gap-3 mb-5'>
 
     {
 
-     offers.map((offer)=>{
+     [
 
-      return(
+      'All',
+      'Pizza',
+      'Pasta',
+      'Family',
+      'Desserts',
+      'Seafood',
+      'Lunch'
+
+     ].map((cat,index)=>(
+
+      <button
+
+       key={index}
+
+       className={`btn ${
+        category === cat
+        ?
+        'btn-dark'
+        :
+        'btn-outline-dark'
+       }`}
+
+       onClick={()=>{
+
+        setCategory(cat);
+
+       }}
+
+      >
+
+       {cat}
+
+      </button>
+
+     ))
+
+    }
+
+   </div>
+
+   {/* OFFERS GRID */}
+
+   <div className='row g-4'>
+
+    {
+
+     filteredOffers.map((offer,index)=>(
+
+      <div
+
+       key={index}
+
+       className='col-lg-4 col-md-6 col-sm-12'
+
+      >
 
        <div
-        className='col-md-4 mb-4'
-        key={offer.id}
+
+        className='card h-100 overflow-hidden'
+
+        style={{
+
+         borderRadius:'25px',
+
+         position:'relative'
+
+        }}
+
        >
 
+        {/* DISCOUNT */}
+
         <div
-         className='card h-100'
+
          style={{
 
-          borderRadius:'28px',
+          position:'absolute',
 
-          overflow:'hidden'
+          top:'20px',
+
+          left:'20px',
+
+          background:'#314131',
+
+          color:'#fff',
+
+          padding:'10px 18px',
+
+          borderRadius:'12px',
+
+          fontWeight:'700',
+
+          zIndex:'2'
 
          }}
+
         >
 
-         {/* IMAGE */}
+         {offer.discount}
 
-         <div
+        </div>
+
+        {/* IMAGE */}
+
+        <img
+
+         src={offer.image}
+
+         alt={offer.name}
+
+         className='img-fluid'
+
+         style={{
+
+          height:'260px',
+
+          objectFit:'cover',
+
+          width:'100%'
+
+         }}
+
+        />
+
+        {/* CONTENT */}
+
+        <div className='p-4 text-center'>
+
+         <span
+
           style={{
-           overflow:'hidden'
+
+           color:'#E5D3B3',
+
+           fontWeight:'600'
+
           }}
+
          >
 
-          <img
+          {offer.category}
 
-           src={offer.image}
+         </span>
 
-           alt='offer'
+         <h3 className='fw-bold mt-2'>
 
-           className='img-fluid'
+          {offer.name}
+
+         </h3>
+
+         <p className='mt-3'>
+
+          {offer.description}
+
+         </p>
+
+         {/* PRICE */}
+
+         <div className='my-4'>
+
+          <span
 
            style={{
 
-            height:'280px',
+            textDecoration:'line-through',
 
-            width:'100%',
+            marginRight:'12px',
 
-            objectFit:'cover'
+            color:'gray',
 
-           }}
-
-          />
-
-         </div>
-
-         {/* CONTENT */}
-
-         <div className='p-4'>
-
-          <div
-           className='d-flex justify-content-between align-items-center mb-3'
-          >
-
-           <span
-            className='badge'
-            style={{
-
-             background:'#C08B5C',
-
-             padding:'10px 15px',
-
-             fontSize:'14px'
-
-            }}
-           >
-
-            LIMITED OFFER
-
-           </span>
-
-           <small
-            style={{
-             color:'#999'
-            }}
-           >
-
-            Save Big
-
-           </small>
-
-          </div>
-
-          <h3 className='fw-bold mb-3'>
-
-           {offer.title}
-
-          </h3>
-
-          <p>
-
-           {offer.description}
-
-          </p>
-
-          <div
-           className='d-flex align-items-center mt-4'
-          >
-
-           <h4
-            style={{
-             color:'#C08B5C'
-            }}
-           >
-
-            {offer.price} EGP
-
-           </h4>
-
-           <h6
-            className='ms-3'
-            style={{
-
-             textDecoration:'line-through',
-
-             color:'#999'
-
-            }}
-           >
-
-            {offer.oldPrice}
-
-           </h6>
-
-          </div>
-
-          {/* BUTTON */}
-
-          <button
-
-           className='btn btn-dark w-100 mt-4'
-
-           onClick={()=>{
-
-            addToCart({
-
-             id:offer.id,
-
-             name:offer.title,
-
-             image:offer.image,
-
-             price:offer.price
-
-            });
-
-            setShowPopup(true);
-
-            setTimeout(()=>{
-
-             setShowPopup(false);
-
-            },2500);
+            fontSize:'18px'
 
            }}
 
           >
 
-           Add To Cart
+           ${offer.oldPrice}
 
-          </button>
+          </span>
+
+          <span
+
+           style={{
+
+            color:'#E5D3B3',
+
+            fontSize:'28px',
+
+            fontWeight:'700'
+
+           }}
+
+          >
+
+           ${offer.newPrice}
+
+          </span>
 
          </div>
+
+         {/* BUTTON */}
+
+         <button
+
+          className='btn btn-dark w-100'
+
+          onClick={()=>{
+
+           addToCart(offer);
+
+          }}
+
+         >
+
+          Order Now
+
+         </button>
 
         </div>
 
        </div>
 
-      )
+      </div>
 
-     })
+     ))
 
     }
 
@@ -289,9 +511,11 @@ function Offers({addToCart}){
 
    {
 
-    showPopup &&
+    popup &&
 
     <div
+
+     className='popup-animation'
 
      style={{
 
@@ -301,87 +525,25 @@ function Offers({addToCart}){
 
       right:'30px',
 
-      background:'#fff',
+      background:'#314131',
+
+      color:'#F5F5F0',
 
       padding:'20px 30px',
 
-      borderRadius:'20px',
-
-      boxShadow:'0 10px 30px rgba(0,0,0,0.15)',
+      borderRadius:'18px',
 
       zIndex:'9999',
 
-      display:'flex',
+      border:'2px solid #E5D3B3',
 
-      alignItems:'center',
-
-      gap:'15px',
-
-      minWidth:'350px'
+      boxShadow:'0 10px 30px rgba(0,0,0,0.3)'
 
      }}
 
     >
 
-     {/* ICON */}
-
-     <div
-
-      style={{
-
-       width:'60px',
-
-       height:'60px',
-
-       borderRadius:'50%',
-
-       background:'#C08B5C',
-
-       display:'flex',
-
-       justifyContent:'center',
-
-       alignItems:'center',
-
-       color:'white',
-
-       fontSize:'30px'
-
-      }}
-
-     >
-
-      ✓
-
-     </div>
-
-     {/* TEXT */}
-
-     <div>
-
-      <h4
-       style={{
-        margin:'0',
-        fontWeight:'700'
-       }}
-      >
-
-       Added To Cart
-
-      </h4>
-
-      <p
-       style={{
-        margin:'0',
-        color:'#777'
-       }}
-      >
-
-       Your delicious item was added.
-
-      </p>
-
-     </div>
+     ✓ {popup}
 
     </div>
 

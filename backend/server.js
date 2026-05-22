@@ -29,7 +29,7 @@ app.use(express.json());
 
 mongoose.connect(
 
- 'mongodb+srv://malakhatem2554_db_user:malak123@cluster0.8gn24pi.mongodb.net/trio?retryWrites=true&w=majority&appName=Cluster0'
+ 'mongodb+srv://malakhatem2554_db_user:malak123@cluster0.mongodb.net/trio?retryWrites=true&w=majority'
 
 )
 

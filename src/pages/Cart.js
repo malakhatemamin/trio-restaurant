@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { FaTrash } from 'react-icons/fa';
+
 function Cart(){
 
  /* CART */
@@ -17,7 +19,7 @@ function Cart(){
 
   ) || [];
 
-  /* ADD QUANTITY + NOTES */
+  /* ADD DEFAULTS */
 
   const updatedCart = savedCart.map((item)=>({
 
@@ -78,6 +80,28 @@ function Cart(){
   }
 
   saveCart(updatedCart);
+
+ };
+
+ /* REMOVE ITEM */
+
+ const removeItem = (index)=>{
+
+  const updatedCart = [...cartItems];
+
+  updatedCart.splice(index,1);
+
+  saveCart(updatedCart);
+
+ };
+
+ /* CLEAR CART */
+
+ const clearCart = ()=>{
+
+  localStorage.removeItem('cart');
+
+  setCartItems([]);
 
  };
 
@@ -173,7 +197,7 @@ function Cart(){
 
          {/* LEFT */}
 
-         <div className='col-lg-6'>
+         <div className='col-lg-5'>
 
           <h3>
 
@@ -197,7 +221,7 @@ function Cart(){
 
          {/* CENTER */}
 
-         <div className='col-lg-3 text-center'>
+         <div className='col-lg-4 text-center'>
 
           <div
 
@@ -223,7 +247,7 @@ function Cart(){
 
            </button>
 
-           {/* QTY */}
+           {/* QUANTITY */}
 
            <h4>
 
@@ -262,6 +286,24 @@ function Cart(){
            ${item.price * item.quantity}
 
           </h4>
+
+          {/* REMOVE */}
+
+          <button
+
+           className='btn btn-danger mt-3'
+
+           onClick={()=>{
+
+            removeItem(index);
+
+           }}
+
+          >
+
+           <FaTrash />
+
+          </button>
 
          </div>
 
@@ -312,17 +354,35 @@ function Cart(){
 
       </h2>
 
-      <a
+      {/* BUTTONS */}
 
-       href='/checkout'
+      <div className='d-flex flex-column flex-md-row gap-3 justify-content-center mt-4'>
 
-       className='btn btn-dark mt-4'
+       <a
 
-      >
+        href='/checkout'
 
-       Proceed To Checkout
+        className='btn btn-dark'
 
-      </a>
+       >
+
+        Proceed To Checkout
+
+       </a>
+
+       <button
+
+        className='btn btn-danger'
+
+        onClick={clearCart}
+
+       >
+
+        Clear Cart
+
+       </button>
+
+      </div>
 
      </div>
 

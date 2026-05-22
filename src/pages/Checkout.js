@@ -4,17 +4,35 @@ function Checkout(){
 
  /* GET CART */
 
- const cartItems = JSON.parse(
+ const cartItems = (
 
-  localStorage.getItem('cart')
+  JSON.parse(
 
- ) || [];
+   localStorage.getItem('cart')
+
+  ) || []
+
+ ).map((item)=>({
+
+  ...item,
+
+  quantity:item.quantity || 1
+
+ }));
 
  /* TOTAL */
 
  const total = cartItems.reduce(
 
-  (acc,item)=>acc + item.price,
+  (acc,item)=>
+
+   acc + (
+
+    Number(item.price) *
+
+    Number(item.quantity || 1)
+
+   ),
 
   0
 
@@ -44,7 +62,7 @@ function Checkout(){
 
  /* PLACE ORDER */
 
- const placeOrder = (e)=>{
+ const placeOrder = async(e)=>{
 
   e.preventDefault();
 
@@ -62,13 +80,51 @@ function Checkout(){
 
   }
 
-  /* SHOW SUCCESS */
+  try{
 
-  setShowPopup(true);
+   await fetch(
 
-  /* CLEAR CART */
+    'http://192.168.1.12:5000/api/orders',
 
-  localStorage.removeItem('cart');
+    {
+
+     method:'POST',
+
+     headers:{
+
+      'Content-Type':'application/json'
+
+     },
+
+     body:JSON.stringify({
+
+      name,
+      phone,
+      address,
+      payment,
+      notes,
+      items:cartItems,
+      total
+
+     })
+
+    }
+
+   );
+
+   /* SHOW POPUP */
+
+   setShowPopup(true);
+
+   /* CLEAR CART */
+
+   localStorage.removeItem('cart');
+
+  }catch(error){
+
+   alert('Order Failed');
+
+  }
 
  };
 
@@ -216,6 +272,8 @@ function Checkout(){
 
        <div className='d-flex gap-4 mb-4'>
 
+        {/* CASH */}
+
         <div>
 
          <input
@@ -236,6 +294,8 @@ function Checkout(){
          Cash
 
         </div>
+
+        {/* VISA */}
 
         <div>
 
@@ -366,21 +426,51 @@ function Checkout(){
 
            key={index}
 
-           className='d-flex justify-content-between mb-3'
+           className='mb-4'
 
           >
 
-           <span>
+           <div className='d-flex justify-content-between'>
 
-            {item.name}
+            <span>
 
-           </span>
+             {item.name}
+             {' '}
+             x
+             {' '}
+             {item.quantity}
 
-           <span>
+            </span>
 
-            ${item.price}
+            <span>
 
-           </span>
+             $
+
+             {
+
+              Number(item.price) *
+
+              Number(item.quantity)
+
+             }
+
+            </span>
+
+           </div>
+
+           {
+
+            item.notes &&
+
+            <small style={{color:'gray'}}>
+
+             Notes:
+             {' '}
+             {item.notes}
+
+            </small>
+
+           }
 
           </div>
 
@@ -389,6 +479,8 @@ function Checkout(){
         }
 
         <hr />
+
+        {/* TOTAL */}
 
         <div className='d-flex justify-content-between'>
 
@@ -416,13 +508,15 @@ function Checkout(){
 
    </div>
 
-   {/* SUCCESS POPUP */}
+   {/* POPUP */}
 
    {
 
     showPopup &&
 
     <div
+
+     className='popup-animation'
 
      style={{
 
@@ -470,6 +564,8 @@ function Checkout(){
 
      >
 
+      {/* ICON */}
+
       <div
 
        style={{
@@ -486,6 +582,8 @@ function Checkout(){
 
       </div>
 
+      {/* TITLE */}
+
       <h1
 
        style={{
@@ -501,6 +599,8 @@ function Checkout(){
        Order Placed
 
       </h1>
+
+      {/* TEXT */}
 
       <p
 
@@ -522,6 +622,8 @@ function Checkout(){
        Trio Restaurant.
 
       </p>
+
+      {/* BUTTON */}
 
       <button
 
