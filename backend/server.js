@@ -15,6 +15,9 @@ require('./routes/messageRoutes');
 const reservationRoutes =
 require('./routes/reservationRoutes');
 
+const orderRoutes =
+require('./routes/orderRoutes');
+
 /* APP */
 
 const app = express();
@@ -29,8 +32,7 @@ app.use(express.json());
 
 mongoose.connect(
 
- 'mongodb+srv://malakhatem2554_db_user:malak123@cluster0.mongodb.net/trio?retryWrites=true&w=majority'
-
+'mongodb+srv://malakhatem2554_db_user:malak123@cluster0.8gn24pi.mongodb.net/trio?retryWrites=true&w=majority&appName=Cluster0'
 )
 
 .then(()=>{
@@ -68,6 +70,12 @@ app.use(
 
 );
 
+app.use(
+
+ '/api/orders',
+ orderRoutes
+
+);
 /* TEST ROUTE */
 
 app.get('/',(req,res)=>{
